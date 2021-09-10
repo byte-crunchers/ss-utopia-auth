@@ -1,21 +1,25 @@
-package com.example.Auth.security;
+package com.smoothstack.Auth.security;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smoothstack.Auth.model.LoginViewModel;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import com.example.Auth.model.LoginViewModel;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
@@ -37,12 +41,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		// Grab credentials and map them to login viewmodel
 		LoginViewModel credentials = null;
 		try {
-			credentials = new ObjectMapper().readValue(request.getInputStream(), LoginViewModel.class);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			String input = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+			System.out.println("Received login attempt: " + input);
 
-		System.out.println("Received: " + credentials.getUsername() + ", " + credentials.getPassword());
+			ObjectMapper mapper = new ObjectMapper();
+			credentials = mapper.readValue(input, LoginViewModel.class);
+		} catch (IOException e) {
+//			e.printStackTrace();
+			System.out.println("Could not read credentials.");
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			return null;
+		}
 
 		// Create login token
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(

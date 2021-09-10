@@ -1,11 +1,12 @@
-package com.example.Auth.security;
+package com.smoothstack.Auth.security;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.example.Auth.db.UserRepository;
-import com.example.Auth.model.User;
+
+import com.smoothstack.Auth.model.User;
+import com.smoothstack.Auth.service.UserRepository;
 
 @Service
 public class UserPrincipalDetailsService implements UserDetailsService {

@@ -1,8 +1,9 @@
-package com.example.Auth.db;
+package com.smoothstack.Auth.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.example.Auth.model.User;
+
+import com.smoothstack.Auth.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

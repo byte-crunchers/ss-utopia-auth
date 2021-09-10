@@ -1,9 +1,10 @@
-package com.example.Auth.db;
+package com.smoothstack.Auth.service;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.Auth.model.User;
+
+import com.smoothstack.Auth.model.User;
 
 import java.util.Arrays;
 import java.util.List;

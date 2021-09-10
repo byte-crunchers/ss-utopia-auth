@@ -1,4 +1,4 @@
-package com.example.Auth;
+package com.smoothstack.Auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

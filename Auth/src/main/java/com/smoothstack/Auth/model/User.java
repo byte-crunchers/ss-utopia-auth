@@ -1,4 +1,4 @@
-package com.example.Auth.model;
+package com.smoothstack.Auth.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;

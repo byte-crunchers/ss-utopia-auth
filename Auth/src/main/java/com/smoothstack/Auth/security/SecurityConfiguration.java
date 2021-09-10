@@ -1,4 +1,4 @@
-package com.example.Auth.security;
+package com.smoothstack.Auth.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.Auth.db.UserRepository;
+import com.smoothstack.Auth.service.UserRepository;
 
 @Configuration
 @EnableWebSecurity

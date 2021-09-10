@@ -1,4 +1,4 @@
-package com.example.Auth.security;
+package com.smoothstack.Auth.security;
 
 public class JwtProperties {
     public static final String SECRET = "SomeSecretForJWTGeneration";

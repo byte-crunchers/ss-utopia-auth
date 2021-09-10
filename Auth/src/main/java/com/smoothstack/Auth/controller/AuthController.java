@@ -1,4 +1,4 @@
-package com.example.Auth.controller;
+package com.smoothstack.Auth.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
