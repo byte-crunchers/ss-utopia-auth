@@ -13,7 +13,7 @@ pipeline {
             steps {
               withSonarQubeEnv('SonarQube') {
                 dir('Auth') {
-                  sh 'mvn clean package sonar:sonar'
+                  sh 'mvn sonar:sonar'
                 }
               }
             }
@@ -25,6 +25,13 @@ pipeline {
                 waitForQualityGate abortPipeline: true
               }*/
             }
+          }
+          stage ('Package')//mvn clena
+          steps {
+            dir('Auth') {
+              sh 'mvn clean package'
+            }
+            
           }
           stage('Build') {
             steps {
