@@ -5,4 +5,4 @@ RUN mkdir /app
 COPY /target/*.war /app/java-application.war
 WORKDIR /app
 EXPOSE 52951
-CMD "java" "-jar" "java-application.war"
+CMD "java" "-jar" "java-application.jar"
