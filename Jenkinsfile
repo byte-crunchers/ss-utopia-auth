@@ -15,7 +15,7 @@ pipeline {
     stages {
       stage('checkout') {
         steps {
-          git branch: 'feature_kubernetes', credentialsId: 'git_login', url: 'https://github.com/byte-crunchers/ss-utopia-auth.git'
+          git branch: 'features_kubernetes', credentialsId: 'git_login', url: 'https://github.com/byte-crunchers/ss-utopia-auth.git'
         }
       }
        stage('get_commit_msg') {
@@ -60,7 +60,7 @@ pipeline {
           stage('Build Auth') {
             steps {
                   dir('Auth') {
-                    sh 'docker build . -t ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-auth:${GIT_COMMIT_MSG}'
+                    sh 'docker build . -t ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-auth:${GIT_COMMIT_MSG} -t ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-auth:latest'
 
                   }
 
@@ -76,12 +76,12 @@ pipeline {
       }
         stage('Deploy Auth') {
             steps {
-                sh 'docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-auth:${GIT_COMMIT_MSG}'
+                sh 'docker push -a ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-auth'
                 }
             }
             stage('Cleaning up') {
         steps{
-            sh "docker rmi ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-auth:${GIT_COMMIT_MSG}"
+            sh "docker image prune -y"
         }
         }
         }
