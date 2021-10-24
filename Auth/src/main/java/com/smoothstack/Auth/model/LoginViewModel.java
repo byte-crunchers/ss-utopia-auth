@@ -8,11 +8,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class LoginViewModel {
-	private String username, password;
+	private String username, password, portal;
 
-	public LoginViewModel(String username, String password) {
+	public LoginViewModel(String username, String password, String portal) {
 		this.username = username;
 		this.password = password;
+		this.portal = portal;
 	}
 
 }

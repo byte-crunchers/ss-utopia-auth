@@ -3,7 +3,10 @@ package com.smoothstack.Auth.security;
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smoothstack.Auth.model.LoginViewModel;
+import com.smoothstack.Auth.model.User;
+import com.smoothstack.Auth.service.UserRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,9 +28,11 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private AuthenticationManager authenticationManager;
+	private UserRepository userRepository;
 
-	public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
 		this.authenticationManager = authenticationManager;
+		this.userRepository = userRepository;
 	}
 
 	/*
@@ -53,6 +58,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			return null;
 		}
 
+		//only allow admin roles to log in to admin portal
+		User user = userRepository.findByUsername(credentials.getUsername());
+		System.out.println("    User role = " + user.getRoles());
+		System.out.println("    Portal = " + credentials.getPortal());
+		
+		if(!user.getRoles().equals("ADMIN") && "admin".equals(credentials.getPortal())) {
+			System.out.println("Unauthorized.");
+			// return 401 Unauthorized status
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			return null;
+		}
+		
 		// Create login token
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 				credentials.getUsername(), credentials.getPassword(), new ArrayList<>());

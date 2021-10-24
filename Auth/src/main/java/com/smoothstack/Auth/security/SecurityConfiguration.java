@@ -17,9 +17,11 @@ import com.smoothstack.Auth.service.UserRepository;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserPrincipalDetailsService userPrincipalDetailsService;
-
+    private UserRepository userRepository;
+    
     public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService, UserRepository userRepository) {
         this.userPrincipalDetailsService = userPrincipalDetailsService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+            .addFilter(new JwtAuthenticationFilter(authenticationManager(), userRepository))
             .authorizeRequests()
 				.antMatchers("/", "/home").permitAll()
 				.anyRequest().authenticated()
