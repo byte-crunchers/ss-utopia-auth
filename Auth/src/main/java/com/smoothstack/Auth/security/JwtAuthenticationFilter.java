@@ -60,13 +60,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		//only allow admin roles to log in to admin portal
 		User user = userRepository.findByUsername(credentials.getUsername());
+		
+		//invalid user
+		if(user == null) {
+			System.out.println("Username doesn't exist.");
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  //401
+			return null;			
+		}
+		
 		System.out.println("    User role = " + user.getRoles());
 		System.out.println("    Portal = " + credentials.getPortal());
 		
 		if(!user.getRoles().equals("ADMIN") && "admin".equals(credentials.getPortal())) {
-			System.out.println("Unauthorized.");
-			// return 401 Unauthorized status
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			System.out.println("User can't log into admin portal.");
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  //401
 			return null;
 		}
 		
@@ -80,9 +87,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			auth = authenticationManager.authenticate(authenticationToken);
 			response.addHeader("Access-Control-Expose-Headers", "Authorization");
 		} catch (Exception ex) {
-			System.out.println("Invalid credentials.");
-			// return 401 Unauthorized status
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			System.out.println("Incorrect password.");
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  //401
 		}
 
 		return auth;
