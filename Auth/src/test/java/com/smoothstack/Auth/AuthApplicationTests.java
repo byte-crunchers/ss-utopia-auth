@@ -48,7 +48,7 @@ class AuthApplicationTests {
 		final String baseUrl = "http://localhost:" + randomServerPort + "/login";
 		URI uri = new URI(baseUrl);
 
-		LoginViewModel credentials = new LoginViewModel("dan", "dan123");
+		LoginViewModel credentials = new LoginViewModel("dan", "dan123", "admin");
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("X-COM-PERSIST", "true");
 		HttpEntity<LoginViewModel> request = new HttpEntity<>(credentials, headers);
