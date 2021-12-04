@@ -68,7 +68,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			return null;			
 		}
 		
-		System.out.println("    User role = " + user.getRoles());
+		System.out.println("    Role = " + user.getRoles());
 		System.out.println("    Portal = " + credentials.getPortal());
 		
 		if(!user.getRoles().equals("ADMIN") && "admin".equals(credentials.getPortal())) {
