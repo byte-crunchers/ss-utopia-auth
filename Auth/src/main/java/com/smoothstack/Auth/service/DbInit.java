@@ -1,6 +1,7 @@
 package com.smoothstack.Auth.service;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.SpringVersion;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,6 @@ public class DbInit implements CommandLineRunner {
     	System.out.println("Password hash:");
     	System.out.println(passwordEncoder.encode("password1"));
     	
+    	System.out.println("Spring version = " + SpringVersion.getVersion());
     }
 }
