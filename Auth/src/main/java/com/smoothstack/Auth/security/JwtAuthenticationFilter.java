@@ -101,7 +101,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		UserPrincipal principal = (UserPrincipal) authResult.getPrincipal();
 
 		// Create JWT Token
-		String token = JWT.create().withSubject(principal.getUsername())
+		String token = JWT.create()
+				.withSubject(principal.getUsername())
+				.withClaim("id", principal.getId())
 				.withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
 				.sign(HMAC512(JwtProperties.SECRET.getBytes()));
 
