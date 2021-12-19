@@ -10,10 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class AuthController {
 
+	//used for health check
+	@GetMapping("/")
+	public ResponseEntity<String> homePage() {
+		return new ResponseEntity<>("Hello World! (Auth Service)", HttpStatus.OK);
+	}
+
 	// user has to manually accept a self-signed certificate before they can attempt
 	// to log in
 	@GetMapping("/login")
-	public ResponseEntity<String> readTest() {
+	public ResponseEntity<String> loginPage() {
 		return new ResponseEntity<>("SSL certificate accepted. You can now attempt to log in.", HttpStatus.OK);
 	}
 
